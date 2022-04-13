@@ -1,10 +1,9 @@
 package uk.ac.westminster.moviestore.entities.relations
 
 import androidx.room.Entity
-import androidx.room.PrimaryKey
 
-@Entity(primaryKeys = ["actorId", "movieId"])
+@Entity(primaryKeys = ["actorName", "movieTitle"])
 data class ActorMovieCrossRef(
-    val actorId: Int,
-    val movieId: Int,
+    val actorName: String,
+    val movieTitle: String,
 )

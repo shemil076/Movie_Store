@@ -6,8 +6,6 @@ import androidx.room.PrimaryKey
 
 @Entity
 data class Actor(
-    @PrimaryKey(autoGenerate = true)
-    val actorId: Int,
-
-
+    @PrimaryKey(autoGenerate = false)
+    val actorName: String
 )

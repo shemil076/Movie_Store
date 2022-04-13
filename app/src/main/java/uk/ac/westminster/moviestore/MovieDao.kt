@@ -3,7 +3,7 @@ package uk.ac.westminster.moviestore
 import androidx.room.*
 import uk.ac.westminster.moviestore.entities.Actor
 import uk.ac.westminster.moviestore.entities.Movie
-import uk.ac.westminster.moviestore.entities.relations.ActorMovieCrossRef
+import uk.ac.westminster.moviestore.entities.relations.MovieActorCrossRef
 import uk.ac.westminster.moviestore.entities.relations.ActorWithMovies
 import uk.ac.westminster.moviestore.entities.relations.MovieWithActors
 
@@ -16,7 +16,7 @@ interface MovieDao {
     suspend fun insertActor(actor: Actor)
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertActorMovieCrossRef(crossRef: ActorMovieCrossRef)
+    suspend fun insertMovieActorCrossRef(actorCrossRef: MovieActorCrossRef)
 
     @Transaction
     @Query("SELECT * FROM movie WHERE movieTitle = :movieTitle")

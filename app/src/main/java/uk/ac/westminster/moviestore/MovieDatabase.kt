@@ -6,13 +6,13 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import uk.ac.westminster.moviestore.entities.Actor
 import uk.ac.westminster.moviestore.entities.Movie
-import uk.ac.westminster.moviestore.entities.relations.ActorMovieCrossRef
+import uk.ac.westminster.moviestore.entities.relations.MovieActorCrossRef
 
 @Database(
     entities = [
         Movie::class,
         Actor::class,
-        ActorMovieCrossRef::class
+        MovieActorCrossRef::class
     ],
     version = 1
 )

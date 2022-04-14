@@ -14,15 +14,16 @@ interface MovieDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertActor(actor: Actor)
-
+//
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertMovieActorCrossRef(actorCrossRef: MovieActorCrossRef)
 
-    @Transaction
-    @Query("SELECT * FROM movie WHERE movieTitle = :movieTitle")
-    suspend fun getActorsOfMovie(movieTitle: String): List<MovieWithActors>
+    @Query("Select * from movie")
+    suspend fun getMovie(): List<Movie>
 
-    @Transaction
-    @Query("SELECT * FROM actor WHERE actorName = :actorName")
-    suspend fun getMovieWithActors(actorName: String): List<ActorWithMovies>
+//    @Query("SELECT * FROM movie WHERE movieTitle = :movieTitle")
+//    suspend fun getActorsOfMovie(movieTitle: String): List<MovieWithActors>
+
+//    @Query("SELECT * FROM actor WHERE actorName = :actorName")
+//    suspend fun getMovieWithActors(actorName: String): List<ActorWithMovies>
 }

@@ -17,23 +17,23 @@ import uk.ac.westminster.moviestore.entities.relations.MovieActorCrossRef
     version = 1
 )
 abstract class MovieDatabase : RoomDatabase() {
-    abstract val movieDao: MovieDao
+    abstract fun movieDao(): MovieDao
 
-    companion object {
-        @Volatile
-        private var INSTANCE: MovieDatabase? = null
-
-        fun getInstance(context: Context): MovieDatabase {
-            synchronized(this){
-                return INSTANCE ?: Room.databaseBuilder(
-                    context.applicationContext,
-                    MovieDatabase::class.java,
-                    "movie_db"
-                ).build().also{
-                    INSTANCE = it
-                }
-            }
-        }
-
-    }
+//    companion object {
+//        @Volatile
+//        private var INSTANCE: MovieDatabase? = null
+//
+//        fun getInstance(context: Context): MovieDatabase {
+//            synchronized(this){
+//                return INSTANCE ?: Room.databaseBuilder(
+//                    context.applicationContext,
+//                    MovieDatabase::class.java,
+//                    "movie_db"
+//                ).build().also{
+//                    INSTANCE = it
+//                }
+//            }
+//        }
+//
+//    }
 }

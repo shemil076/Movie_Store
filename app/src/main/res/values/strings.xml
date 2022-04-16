@@ -3,7 +3,9 @@
     <string name="add_movies_to_db">Add Movies to DB</string>
     <string name="search_for_movies">Search for Movies</string>
     <string name="search_for_actors">Search for Actors</string>
-    <string name="save_movie_to_database">save_movie_to_database</string>
-    <string name="retrieve_movie">retrieve_movie</string>
+    <string name="save_movie_to_database">save movie to database</string>
+    <string name="retrieve_movie">retrieve movie</string>
     <string name="details_will_appear_here">Details will appear here</string>
+    <string name="hint_search">Search</string>
+    <string name="search">Search</string>
 </resources>

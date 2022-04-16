@@ -11,7 +11,7 @@ data class ActorWithMovies(
     @Relation(
         parentColumn = "actorName",
         entityColumn =  "movieTitle",
-        associateBy = Junction(ActorWithMovies::class)
+        associateBy = Junction(MovieActorCrossRef::class)
     )
     val movies: List<Movie>
 )

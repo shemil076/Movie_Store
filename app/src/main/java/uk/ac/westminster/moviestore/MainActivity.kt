@@ -36,6 +36,7 @@ class MainActivity : AppCompatActivity() {
 
         searchMovie.setOnClickListener{
             val searchMovieIntent = Intent(this, MovieSearchActivity::class.java)
+//            searchMovieIntent.putExtras("")
             startActivity(searchMovieIntent)
         }
 

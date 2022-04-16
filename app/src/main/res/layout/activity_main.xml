@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    tools:context=".MainActivity"
+    android:background="@drawable/gredient_ackground1">
 
 
     <LinearLayout
@@ -23,19 +24,25 @@
             android:id="@+id/addMovies"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/add_movies_to_db" />
+            android:text="@string/add_movies_to_db"
+            style="@style/Widget.MaterialComponents.Button.Icon"
+            app:icon="@android:drawable/ic_input_add"/>
 
         <Button
             android:id="@+id/searchMovie"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/search_for_movies" />
+            android:text="@string/search_for_movies"
+            style="@style/Widget.MaterialComponents.Button.Icon"
+            app:icon="@android:drawable/ic_menu_search"/>
 
         <Button
             android:id="@+id/SearchActors"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/search_for_actors" />
+            android:text="@string/search_for_actors"
+            style="@style/Widget.MaterialComponents.Button.Icon"
+            app:icon="@android:drawable/ic_menu_search"/>
 
 
     </LinearLayout>

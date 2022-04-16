@@ -21,6 +21,11 @@ interface MovieDao {
     @Query("Select * from movie")
     suspend fun getMovie(): List<Movie>
 
+
+    @Transaction
+    @Query("SELECT * FROM actor WHERE actorName LIKE '%' || :query || '%'")
+    fun getMoviesOfActors(query: String): List<ActorWithMovies>
+
 //    @Query("SELECT * FROM movie WHERE movieTitle = :movieTitle")
 //    suspend fun getActorsOfMovie(movieTitle: String): List<MovieWithActors>
 

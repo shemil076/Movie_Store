@@ -1,5 +1,6 @@
 package uk.ac.westminster.moviestore
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -23,6 +24,8 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         val addToDb = findViewById<Button>(R.id.addMovies);
+        val searchMovie = findViewById<Button>(R.id.searchMovie)
+
 
         val db = Room.databaseBuilder(this, MovieDatabase::class.java, "movie_db").build()
         movieDao = db.movieDao()
@@ -31,7 +34,10 @@ class MainActivity : AppCompatActivity() {
             populateData()
         }
 
-
+        searchMovie.setOnClickListener{
+            val searchMovieIntent = Intent(this, MovieSearchActivity::class.java)
+            startActivity(searchMovieIntent)
+        }
 
     }
 

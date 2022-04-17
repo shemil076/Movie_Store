@@ -123,7 +123,6 @@ class MovieSearchActivity : AppCompatActivity() {
 
     fun getMovie(name: String) {
         val url_string = "http://www.omdbapi.com/?t=$name&apikey=c8ae66ce"
-
         runBlocking{
             withContext(Dispatchers.IO){
                 val stringBuilder = StringBuilder("")
@@ -137,12 +136,10 @@ class MovieSearchActivity : AppCompatActivity() {
                     return@withContext
                 }
                 var line = reader.readLine()
-
                 while (line != null){
                     stringBuilder.append(line)
                     line = reader.readLine()
                 }
-
                 data = parseJSON(stringBuilder)
                 bitMapIcon = getCoverImage()
             }

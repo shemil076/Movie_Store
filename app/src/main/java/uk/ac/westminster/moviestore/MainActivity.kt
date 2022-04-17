@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.widget.Button
+import android.widget.Toast
 import uk.ac.westminster.moviestore.entities.Actor
 import uk.ac.westminster.moviestore.entities.Movie
 import uk.ac.westminster.moviestore.entities.relations.MovieActorCrossRef
@@ -23,8 +24,14 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        if (supportActionBar != null) {
+            supportActionBar?.hide()
+        }
+
         val addToDb = findViewById<Button>(R.id.addMovies);
         val searchMovie = findViewById<Button>(R.id.searchMovie)
+        val SearchActors = findViewById<Button>(R.id.SearchActors)
+        val moviesWithSimilarNames = findViewById<Button>(R.id.moviesWithSimilarNames)
 
 
         val db = Room.databaseBuilder(this, MovieDatabase::class.java, "movie_db").build()
@@ -36,8 +43,17 @@ class MainActivity : AppCompatActivity() {
 
         searchMovie.setOnClickListener{
             val searchMovieIntent = Intent(this, MovieSearchActivity::class.java)
-//            searchMovieIntent.putExtras("")
             startActivity(searchMovieIntent)
+        }
+
+        SearchActors.setOnClickListener {
+            val searchActorIntent = Intent(this, ActorSearchActivity::class.java)
+            startActivity(searchActorIntent)
+        }
+
+        moviesWithSimilarNames.setOnClickListener{
+            val moviesWithSimilarNamesIntent = Intent(this, findSimilarNameMoviesActivity::class.java)
+            startActivity(moviesWithSimilarNamesIntent)
         }
 
     }
@@ -104,6 +120,9 @@ class MainActivity : AppCompatActivity() {
                 for (movieActorRelationship in movieActorRelationships){
                     movieDao.insertMovieActorCrossRef(movieActorRelationship)
                 }
+
+                val toast = Toast.makeText(applicationContext, "Database Updated", Toast.LENGTH_LONG)
+                toast.show()
 
                 val movie : List<Movie> =  movieDao.getMovie()
 

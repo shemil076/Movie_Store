@@ -8,4 +8,5 @@
     <string name="details_will_appear_here">Details will appear here</string>
     <string name="hint_search">Search</string>
     <string name="search">Search</string>
+    <string name="movieswithsimilarnames">movies With Similar Names</string>
 </resources>

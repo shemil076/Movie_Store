@@ -13,6 +13,9 @@
         android:theme="@style/Theme.MovieStore"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".findSimilarNameMoviesActivity"
+            android:exported="false" />
+        <activity
             android:name=".ActorSearchActivity"
             android:exported="false" />
         <activity

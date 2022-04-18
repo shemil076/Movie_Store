@@ -28,7 +28,7 @@ class findSimilarNameMoviesActivity : AppCompatActivity() {
     var data = ""
     lateinit var movieNames: List<String>
     lateinit var movieNameCard : RecyclerView
-    var query: String = " "
+    var query: String = "!@$%^&*()"
     var foundError = false
     var name = " "
 
@@ -59,12 +59,13 @@ class findSimilarNameMoviesActivity : AppCompatActivity() {
                 }else{
                     val toast = Toast.makeText(applicationContext, "Nothing to search", Toast.LENGTH_LONG)
                     toast.show()
+                    movieNameCard.visibility= View.GONE
                 }
             }else{
                 val toast = Toast.makeText(applicationContext, "Nothing to search", Toast.LENGTH_LONG)
                 toast.show()
+                movieNameCard.visibility= View.GONE
             }
-
         }
     }
 
@@ -132,4 +133,24 @@ class findSimilarNameMoviesActivity : AppCompatActivity() {
             Log.d("movies", "$movieNames")
         }
     }
+    override fun onSaveInstanceState(outState: Bundle){
+        super.onSaveInstanceState(outState)
+
+        // how to save the state of a custom  listOf<ActorWithMovies>
+//        outState.putParcelableArrayList("films", ArrayList(films))
+
+        outState.putString("query", query)
+
+    }
+
+    override fun onRestoreInstanceState(savedInstanceState: Bundle){
+        super.onRestoreInstanceState(savedInstanceState)
+
+        query = savedInstanceState.getString("query","!@$%^&*()" )
+
+        if(query != "!@$%^&*()") {
+            retrieveMovies(query)
+        }
+    }
+
 }

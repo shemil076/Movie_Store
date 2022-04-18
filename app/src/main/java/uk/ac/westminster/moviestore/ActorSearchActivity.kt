@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Parcelable
 import android.util.Log
+import android.view.View
 import android.widget.*
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -78,13 +79,14 @@ class ActorSearchActivity : AppCompatActivity() {
     override fun onRestoreInstanceState(savedInstanceState: Bundle){
         super.onRestoreInstanceState(savedInstanceState)
 
-        name = savedInstanceState.getString("name"," " )
+        name = savedInstanceState.getString("name","!@$%^&*()" )
 
         if(name != "!@$%^&*()") {
             getActorsMovieDetails(name)
         }else{
-
-        getActorsMovieDetails(name)
+            val toast = Toast.makeText(applicationContext, "$name not found", Toast.LENGTH_LONG)
+            toast.show()
+//        getActorsMovieDetails(name)
         }
     }
 }

@@ -25,7 +25,7 @@ import java.net.URL
 
 
 class MovieSearchActivity : AppCompatActivity() {
-    lateinit var imageUrl :String
+     var imageUrl = "https://uwaterphoto.com/wp-content/uploads/2013/10/placeholder_image2.png"
     var data = ""
     var bitMapIcon: Bitmap? = null
     lateinit var movieDao: MovieDao
@@ -33,8 +33,8 @@ class MovieSearchActivity : AppCompatActivity() {
     lateinit var showInfo: TextView
     lateinit var coverImage : ImageView
     lateinit var saveCoverImage : ImageView
-    lateinit var query : String
-    lateinit var nameRetrieve : String
+     var query: String = " "
+     var nameRetrieve :  String =  " "
     lateinit var scrollView : ScrollView
 
     var retrieveMovieButtonPressed = false
@@ -271,35 +271,37 @@ class MovieSearchActivity : AppCompatActivity() {
         movieSaveButtonPressed = savedInstanceState.getBoolean("movieSaveButtonPressed", false)
 
 
-
-        if(retrieveMovieButtonPressed){
-            showInfo.text = data
-            scrollView.visibility = View.VISIBLE
-            coverImage.visibility = View.VISIBLE
-            saveCoverImage.visibility = View.GONE
-            runBlocking{
-                withContext(Dispatchers.IO){
-                    bitMapIcon = getCoverImage()
-
-                }
-            }
-            coverImage.setImageBitmap(bitMapIcon)
-        }else if (movieSaveButtonPressed){
+        if(query == " "){
             scrollView.visibility = View.GONE
             coverImage.visibility = View.GONE
-            saveCoverImage.visibility = View.VISIBLE
-            runBlocking{
-                withContext(Dispatchers.IO){
-                    bitMapIcon = getCoverImage()
-                    saveCoverImage.setImageBitmap(bitMapIcon)
+            saveCoverImage.visibility = View.GONE
+        }else {
+
+            if (retrieveMovieButtonPressed) {
+                showInfo.text = data
+                scrollView.visibility = View.VISIBLE
+                coverImage.visibility = View.VISIBLE
+                saveCoverImage.visibility = View.GONE
+                runBlocking {
+                    withContext(Dispatchers.IO) {
+                        bitMapIcon = getCoverImage()
+                    }
+                }
+                coverImage.setImageBitmap(bitMapIcon)
+            } else if (movieSaveButtonPressed) {
+                scrollView.visibility = View.GONE
+                coverImage.visibility = View.GONE
+                saveCoverImage.visibility = View.VISIBLE
+                runBlocking {
+                    withContext(Dispatchers.IO) {
+                        bitMapIcon = getCoverImage()
+                        saveCoverImage.setImageBitmap(bitMapIcon)
+                    }
                 }
             }
         }
-
         Log.d("onRestore", data)
 
     }
-
-
 }
 

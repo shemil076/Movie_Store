@@ -3,13 +3,18 @@ package uk.ac.westminster.moviestore
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import android.widget.Button
 import android.widget.EditText
+import android.widget.Toast
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.withContext
 import org.json.JSONArray
 import org.json.JSONObject
+import uk.ac.westminster.moviestore.adapters.MovieAdapter
 import java.io.BufferedReader
 import java.io.IOException
 import java.io.InputStreamReader
@@ -21,6 +26,11 @@ class findSimilarNameMoviesActivity : AppCompatActivity() {
     lateinit var movieTitle: String
     lateinit var movieDetails: String
     var data = ""
+    lateinit var movieNames: List<String>
+    lateinit var movieNameCard : RecyclerView
+    var query: String = " "
+    var foundError = false
+    var name = " "
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -33,12 +43,28 @@ class findSimilarNameMoviesActivity : AppCompatActivity() {
 
         val searchTitle = findViewById<EditText>(R.id.searchTitle)
         val getTitle = findViewById<Button>(R.id.getTitle)
+        movieNameCard = findViewById<RecyclerView>(R.id.showData)
 
 //        val movieSearch : MovieSearchActivity
 
         getTitle.setOnClickListener {
-            val name = searchTitle.text.toString()
-            retrieveMovies(name)
+
+             name = searchTitle.text.toString()
+            if(name.isNotEmpty()){
+                if(name != " "){
+                    val remove = " "
+                    val replace = "%20"
+                    query = name.replace(remove,replace)
+                    retrieveMovies(query)
+                }else{
+                    val toast = Toast.makeText(applicationContext, "Nothing to search", Toast.LENGTH_LONG)
+                    toast.show()
+                }
+            }else{
+                val toast = Toast.makeText(applicationContext, "Nothing to search", Toast.LENGTH_LONG)
+                toast.show()
+            }
+
         }
     }
 
@@ -64,35 +90,46 @@ class findSimilarNameMoviesActivity : AppCompatActivity() {
                     line = reader.readLine()
                 }
                  parseJSON(stringBuilder)
-//                Log.d("data", data)
             }
         }
+        if(!foundError){
+            val movieAdapter = MovieAdapter(movieNames)
+            val linearLayout = LinearLayoutManager(this)
+            movieNameCard.layoutManager = linearLayout
+            movieNameCard.adapter = movieAdapter
+            movieNameCard.visibility= View.VISIBLE
+        }else{
+            val toast = Toast.makeText(applicationContext, "$name not found", Toast.LENGTH_LONG)
+            movieNameCard.visibility= View.GONE
+            toast.show()
+        }
     }
-
-//    suspend fun parseJSON(stringBuilder: StringBuilder): String {
-//        varing = ""
-//        val json = J info:StrSONObject(stringBuilder.toString())
-//        title = json["Title"].toString()
-//
-//        info = "Title: $title"
-//
-//        return info
-//    }
 
 
     suspend fun parseJSON(stringBuilder:StringBuilder){
         val json = JSONObject(stringBuilder.toString())
-        val allMovies = StringBuilder()
+        val allMovies = java.lang.StringBuilder()
 
-        var jsonArray : JSONArray = json.getJSONArray("Title")
+        if(json.has("Error")){
+            foundError = true
+        }else{
+            foundError = false
+            var jsonArray : JSONArray = json.getJSONArray("Search")
 
-        for(i in 0..jsonArray.length()-1){
-            val movie: JSONObject = jsonArray[i] as JSONObject
+            for(i in 0..jsonArray.length()-1){
+                val movie: JSONObject = jsonArray[i] as JSONObject
 
-            val title = movie["Title "] as JSONObject
-            allMovies.append(title)
 
+                val title = movie["Title"] as String
+                allMovies.append(title)
+
+                if(i < jsonArray.length()-1){
+
+                    allMovies.append(",,")
+                }
+                movieNames = allMovies.toString().split(",,")
+            }
+            Log.d("movies", "$movieNames")
         }
-        Log.d("movies", "$allMovies")
     }
 }

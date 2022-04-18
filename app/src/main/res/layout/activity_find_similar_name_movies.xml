@@ -47,7 +47,8 @@
         app:layout_constraintHorizontal_bias="0.325"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.957">
+        app:layout_constraintVertical_bias="0.957"
+        android:visibility="gone">
 
         <TextView
             android:id="@+id/showInfo"
@@ -58,6 +59,19 @@
             android:textColor="@color/white"
             android:textSize="24sp" />
     </ScrollView>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/showData"
+        android:layout_width="381dp"
+        android:layout_height="546dp"
+        android:layout_marginBottom="16dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.533"
+        app:layout_constraintStart_toStartOf="parent">
+
+    </androidx.recyclerview.widget.RecyclerView>
+
 
 
 

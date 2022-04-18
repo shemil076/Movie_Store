@@ -20,7 +20,7 @@ class ActorSearchActivity : AppCompatActivity() {
     lateinit var movieDao: MovieDao
     lateinit var films: List<ActorWithMovies>
     lateinit var showCards : RecyclerView
-    lateinit var name: String
+     var name =  "!@$%^&*()"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -79,8 +79,13 @@ class ActorSearchActivity : AppCompatActivity() {
         super.onRestoreInstanceState(savedInstanceState)
 
         name = savedInstanceState.getString("name"," " )
-        getActorsMovieDetails(name)
 
+        if(name != "!@$%^&*()") {
+            getActorsMovieDetails(name)
+        }else{
+
+        getActorsMovieDetails(name)
+        }
     }
 }
 

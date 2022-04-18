@@ -8,7 +8,7 @@
     android:background="@drawable/gredient_ackground1">
 
     <EditText
-        android:id="@+id/searchByNamesEditText"
+        android:id="@+id/searchTitle"
         android:layout_width="251dp"
         android:layout_height="58dp"
         android:layout_marginTop="44dp"
@@ -24,7 +24,7 @@
     </EditText>
 
     <Button
-        android:id="@+id/searchByNamesButton"
+        android:id="@+id/getTitle"
         style="@style/Widget.MaterialComponents.Button.Icon"
         android:layout_width="130dp"
         android:layout_height="55dp"

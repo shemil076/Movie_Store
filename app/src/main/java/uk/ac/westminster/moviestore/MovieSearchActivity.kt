@@ -29,6 +29,16 @@ class MovieSearchActivity : AppCompatActivity() {
     var data = ""
     var bitMapIcon: Bitmap? = null
     lateinit var movieDao: MovieDao
+    var info:String = ""
+    lateinit var showInfo: TextView
+    lateinit var coverImage : ImageView
+    lateinit var saveCoverImage : ImageView
+    lateinit var query : String
+    lateinit var nameRetrieve : String
+    lateinit var scrollView : ScrollView
+
+    var retrieveMovieButtonPressed = false
+    var movieSaveButtonPressed = false
 
     lateinit var title :String
     lateinit var year :String
@@ -47,10 +57,10 @@ class MovieSearchActivity : AppCompatActivity() {
 
         val searchView = findViewById<EditText>(R.id.movieSearchView)
         val retrieveMovieButton = findViewById<Button>(R.id.movieRetrieveButton)
-        val showInfo = findViewById<TextView>(R.id.showData)
-        val scrollView = findViewById<ScrollView>(R.id.scrollView)
-        val coverImage = findViewById<ImageView>(R.id.coverImage)
-        val saveCoverImage = findViewById<ImageView>(R.id.saveCoverImage)
+        showInfo = findViewById<TextView>(R.id.showData)
+        scrollView = findViewById<ScrollView>(R.id.scrollView)
+        coverImage = findViewById<ImageView>(R.id.coverImage)
+        saveCoverImage = findViewById<ImageView>(R.id.saveCoverImage)
         val movieSaveButton = findViewById<Button>(R.id.movieSaveButton)
 
         saveCoverImage.visibility = View.GONE
@@ -65,10 +75,12 @@ class MovieSearchActivity : AppCompatActivity() {
             supportActionBar?.hide()
         }
         retrieveMovieButton.setOnClickListener {
+            movieSaveButtonPressed = false
+            retrieveMovieButtonPressed = true
 
             saveCoverImage.visibility = View.GONE
 
-            val nameRetrieve = searchView.text.toString()
+            nameRetrieve = searchView.text.toString()
             if (nameRetrieve.isNotEmpty() ) {
                 if (nameRetrieve != " "){
                     scrollView.visibility = View.VISIBLE
@@ -76,7 +88,7 @@ class MovieSearchActivity : AppCompatActivity() {
 
                     val remove = " "
                     val replace = "%20"
-                    val query = nameRetrieve.replace(remove,replace)
+                    query = nameRetrieve.replace(remove,replace)
 
                     getMovie(query)
 
@@ -95,17 +107,21 @@ class MovieSearchActivity : AppCompatActivity() {
         }
 
         movieSaveButton.setOnClickListener {
+            movieSaveButtonPressed = true
+            retrieveMovieButtonPressed = false
+
+
             scrollView.visibility = View.GONE
             coverImage.visibility = View.GONE
 
-            val nameRetrieve = searchView.text.toString()
+            nameRetrieve = searchView.text.toString()
             if (nameRetrieve.isNotEmpty()){
                 if(nameRetrieve != " "){
                     saveCoverImage.visibility = View.VISIBLE
 
                     val remove = " "
                     val replace = "%20"
-                    val query = nameRetrieve.replace(remove,replace)
+                    query = nameRetrieve.replace(remove,replace)
                     getMovie(query)
 
                     saveToDB()
@@ -148,7 +164,7 @@ class MovieSearchActivity : AppCompatActivity() {
     }
     suspend fun parseJSON(stringBuilder: StringBuilder): String{
 
-        var info:String = ""
+
 
          val json = JSONObject(stringBuilder.toString())
          title = json["Title"].toString()
@@ -202,6 +218,66 @@ class MovieSearchActivity : AppCompatActivity() {
             }
         }
     }
+
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+
+        outState.putString("info", info)
+        outState.putString("data", data )
+        outState.putString("image", imageUrl)
+        outState.putString("query",query)
+        outState.putString("nameRetrieve",nameRetrieve)
+        outState.putBoolean("retrieveMovieButtonPressed",retrieveMovieButtonPressed)
+        outState.putBoolean("movieSaveButtonPressed",movieSaveButtonPressed)
+
+
+
+
+
+        Log.d("imageUrl", imageUrl)
+    }
+
+    override fun onRestoreInstanceState(savedInstanceState: Bundle){
+        super.onRestoreInstanceState(savedInstanceState)
+
+//        info = savedInstanceState.getString("info", null)
+        data = savedInstanceState.getString("data", null)
+        imageUrl = savedInstanceState.getString("image", null)
+        query = savedInstanceState.getString("query", null)
+        nameRetrieve = savedInstanceState.getString("nameRetrieve", null)
+        retrieveMovieButtonPressed = savedInstanceState.getBoolean("retrieveMovieButtonPressed", false)
+        movieSaveButtonPressed = savedInstanceState.getBoolean("movieSaveButtonPressed", false)
+
+
+
+        if(retrieveMovieButtonPressed){
+            showInfo.text = data
+            scrollView.visibility = View.VISIBLE
+            coverImage.visibility = View.VISIBLE
+            saveCoverImage.visibility = View.GONE
+            runBlocking{
+                withContext(Dispatchers.IO){
+                    bitMapIcon = getCoverImage()
+                    coverImage.setImageBitmap(bitMapIcon)
+                }
+            }
+        }else if (movieSaveButtonPressed){
+            scrollView.visibility = View.GONE
+            coverImage.visibility = View.GONE
+            saveCoverImage.visibility = View.VISIBLE
+            runBlocking{
+                withContext(Dispatchers.IO){
+                    bitMapIcon = getCoverImage()
+                    saveCoverImage.setImageBitmap(bitMapIcon)
+                }
+            }
+        }
+
+        Log.d("onRestore", data)
+
+    }
+
 
 }
 

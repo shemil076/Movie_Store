@@ -58,14 +58,8 @@ class ActorSearchActivity : AppCompatActivity() {
                 for (film in films) {
                     Log.d("insert", "$film")
                 }
-
-
-
-
             }
             if(films.size > 1){
-
-
                 for (element in films) {
                     for(movie in element.movies) {
                         val mName = movie.movieTitle

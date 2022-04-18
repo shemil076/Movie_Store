@@ -38,26 +38,15 @@
         app:layout_constraintTop_toTopOf="parent"
         tools:ignore="SmallSp" />
 
-    <ScrollView
-        android:id="@+id/scrollView"
-        android:layout_width="371dp"
-        android:layout_height="353dp"
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/showData"
+        android:layout_width="387dp"
+        android:layout_height="559dp"
+        android:layout_marginBottom="32dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.325"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.957">
+        app:layout_constraintStart_toStartOf="parent">
 
-        <TextView
-            android:id="@+id/showInfo"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@drawable/border"
-            android:hint="@string/details_will_appear_here"
-            android:textColor="@color/white"
-            android:textSize="24sp" />
-    </ScrollView>
-
+    </androidx.recyclerview.widget.RecyclerView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

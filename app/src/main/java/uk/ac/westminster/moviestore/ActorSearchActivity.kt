@@ -4,22 +4,22 @@ import android.annotation.SuppressLint
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
-import android.widget.Button
-import android.widget.EditText
-import android.widget.ScrollView
-import android.widget.TextView
+import android.widget.*
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import androidx.room.Room
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.withContext
+import uk.ac.westminster.moviestore.adapters.ParentAdapter
 import uk.ac.westminster.moviestore.entities.relations.ActorWithMovies
 
 class ActorSearchActivity : AppCompatActivity() {
 
     lateinit var movieDao: MovieDao
-    lateinit var showInfo: TextView
     lateinit  var filmName: String
     lateinit var films: List<ActorWithMovies>
+    lateinit var showCards : RecyclerView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -34,8 +34,7 @@ class ActorSearchActivity : AppCompatActivity() {
 
         val movieSearchView = findViewById<EditText>(R.id.movieSearchView)
         val searchActors = findViewById<Button>(R.id.searchActors)
-        val scrollView = findViewById<ScrollView>(R.id.scrollView)
-        showInfo = findViewById<TextView>(R.id.showInfo)
+        showCards = findViewById<RecyclerView>(R.id.showData)
 
 
         searchActors.setOnClickListener {
@@ -57,25 +56,14 @@ class ActorSearchActivity : AppCompatActivity() {
                 Log.d("size", "$size")
                 for (film in films) {
                     Log.d("insert", "$film")
-                }
-            }
-            if(films.size > 1){
-                for (element in films) {
-                    for(movie in element.movies) {
-                        val mName = movie.movieTitle
-                        val actor = element.actor.actorName
-                        Log.d("Actor Details", " $mName + $actor")
-//                        showInfo.text = "Actor Name: $actor\nMovie Name: $mName "
 
-                        showInfo.append("\n Actor Name: $actor\n " +
-                                "Movie Name: $mName")
-                    }
                 }
-            }else if(films.size == 1){
-                val name = films[0].movies[0].movieTitle
-                showInfo.text = "Movie Name: $name "
-                Log.d("actor", name)
             }
+
         }
+        val parentAdapter = ParentAdapter(this,films)
+        val linearLayout = LinearLayoutManager(this)
+        showCards.layoutManager = linearLayout
+        showCards.adapter = parentAdapter
     }
 }

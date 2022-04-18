@@ -8,6 +8,7 @@ import android.widget.EditText
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.withContext
+import org.json.JSONArray
 import org.json.JSONObject
 import java.io.BufferedReader
 import java.io.IOException
@@ -62,19 +63,36 @@ class findSimilarNameMoviesActivity : AppCompatActivity() {
                     stringBuilder.append(line)
                     line = reader.readLine()
                 }
-                data = parseJSON(stringBuilder)
-                Log.d("data", data)
+                 parseJSON(stringBuilder)
+//                Log.d("data", data)
             }
         }
     }
 
-    suspend fun parseJSON(stringBuilder: StringBuilder): String {
-        var info:String = ""
+//    suspend fun parseJSON(stringBuilder: StringBuilder): String {
+//        varing = ""
+//        val json = J info:StrSONObject(stringBuilder.toString())
+//        title = json["Title"].toString()
+//
+//        info = "Title: $title"
+//
+//        return info
+//    }
+
+
+    suspend fun parseJSON(stringBuilder:StringBuilder){
         val json = JSONObject(stringBuilder.toString())
-        title = json["Title"].toString()
+        val allMovies = StringBuilder()
 
-        info = "Title: $title"
+        var jsonArray : JSONArray = json.getJSONArray("Title")
 
-        return info
+        for(i in 0..jsonArray.length()-1){
+            val movie: JSONObject = jsonArray[i] as JSONObject
+
+            val title = movie["Title "] as JSONObject
+            allMovies.append(title)
+
+        }
+        Log.d("movies", "$allMovies")
     }
 }

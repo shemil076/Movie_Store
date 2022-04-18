@@ -92,8 +92,17 @@ class MovieSearchActivity : AppCompatActivity() {
 
                     getMovie(query)
 
-                    showInfo.text = data
-                    coverImage.setImageBitmap(bitMapIcon)
+
+                    if(data == "404"){
+                        val toast = Toast.makeText(applicationContext, "Nothing to search", Toast.LENGTH_LONG)
+                        toast.show()
+                        scrollView.visibility = View.GONE
+                        coverImage.setImageBitmap(bitMapIcon)
+                    }else{
+                        showInfo.text = data
+                        coverImage.setImageBitmap(bitMapIcon)
+                    }
+
                 }else{
                     val toast = Toast.makeText(applicationContext, "Nothing to search", Toast.LENGTH_LONG)
                     toast.show()
@@ -124,8 +133,16 @@ class MovieSearchActivity : AppCompatActivity() {
                     query = nameRetrieve.replace(remove,replace)
                     getMovie(query)
 
-                    saveToDB()
-                    saveCoverImage.setImageBitmap(bitMapIcon)
+
+                    if (data == "404"){
+                        val toast = Toast.makeText(applicationContext, "$nameRetrieve not found" , Toast.LENGTH_LONG)
+                        toast.show()
+                        saveCoverImage.setImageBitmap(bitMapIcon)
+                    }else{
+                        saveToDB()
+                        saveCoverImage.setImageBitmap(bitMapIcon)
+                    }
+
                 }
             }else{
 
@@ -167,20 +184,28 @@ class MovieSearchActivity : AppCompatActivity() {
 
 
          val json = JSONObject(stringBuilder.toString())
-         title = json["Title"].toString()
-         year = json["Year"].toString()
-         rated = json["Rated"].toString()
-         released = json["Released"].toString()
-         runtime = json["Runtime"].toString()
-         genre = json["Genre"].toString()
-         director = json["Director"].toString()
-         writer = json["Writer"].toString()
-         actors = json["Actors"].toString()
-        plot = json["Plot"].toString()
-        imageUrl = json["Poster"].toString()
 
-        info = "Title: $title,\n Year: $year,\n Rated: $rated,\n Released: $released,\n Runtime: $runtime,\n Genre: $genre,\n Director: $director,\n Writer: $writer,\n Actors: $actors,\n Plot: $plot"
-        return info
+        if(json.has("Error")){
+            imageUrl = "https://ih0.redbubble.net/image.183170713.4213/flat,800x800,075,f.u3.jpg"
+            return "404"
+        }else{
+            title = json["Title"].toString()
+            year = json["Year"].toString()
+            rated = json["Rated"].toString()
+            released = json["Released"].toString()
+            runtime = json["Runtime"].toString()
+            genre = json["Genre"].toString()
+            director = json["Director"].toString()
+            writer = json["Writer"].toString()
+            actors = json["Actors"].toString()
+            plot = json["Plot"].toString()
+            imageUrl = json["Poster"].toString()
+
+            info = "Title: $title,\n Year: $year,\n Rated: $rated,\n Released: $released,\n Runtime: $runtime,\n Genre: $genre,\n Director: $director,\n Writer: $writer,\n Actors: $actors,\n Plot: $plot"
+            return info
+        }
+
+
     }
 
 
@@ -232,16 +257,12 @@ class MovieSearchActivity : AppCompatActivity() {
         outState.putBoolean("movieSaveButtonPressed",movieSaveButtonPressed)
 
 
-
-
-
         Log.d("imageUrl", imageUrl)
     }
 
     override fun onRestoreInstanceState(savedInstanceState: Bundle){
         super.onRestoreInstanceState(savedInstanceState)
 
-//        info = savedInstanceState.getString("info", null)
         data = savedInstanceState.getString("data", null)
         imageUrl = savedInstanceState.getString("image", null)
         query = savedInstanceState.getString("query", null)
@@ -259,9 +280,10 @@ class MovieSearchActivity : AppCompatActivity() {
             runBlocking{
                 withContext(Dispatchers.IO){
                     bitMapIcon = getCoverImage()
-                    coverImage.setImageBitmap(bitMapIcon)
+
                 }
             }
+            coverImage.setImageBitmap(bitMapIcon)
         }else if (movieSaveButtonPressed){
             scrollView.visibility = View.GONE
             coverImage.visibility = View.GONE

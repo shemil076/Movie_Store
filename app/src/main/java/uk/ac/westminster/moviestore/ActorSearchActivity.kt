@@ -3,6 +3,7 @@ package uk.ac.westminster.moviestore
 import android.annotation.SuppressLint
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.Parcelable
 import android.util.Log
 import android.widget.*
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -17,9 +18,9 @@ import uk.ac.westminster.moviestore.entities.relations.ActorWithMovies
 class ActorSearchActivity : AppCompatActivity() {
 
     lateinit var movieDao: MovieDao
-    lateinit  var filmName: String
     lateinit var films: List<ActorWithMovies>
     lateinit var showCards : RecyclerView
+    lateinit var name: String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -38,13 +39,10 @@ class ActorSearchActivity : AppCompatActivity() {
 
 
         searchActors.setOnClickListener {
-            val name = movieSearchView.getText().toString()
+            name = movieSearchView.getText().toString()
             getActorsMovieDetails(name)
-
 //            showInfo.text = filmName
-
         }
-
     }
 
     @SuppressLint("SetTextI18n")
@@ -52,18 +50,37 @@ class ActorSearchActivity : AppCompatActivity() {
         runBlocking {
             withContext(Dispatchers.IO){
                 films = movieDao.getMoviesOfActors(query)
+
                 val size = films.size
                 Log.d("size", "$size")
                 for (film in films) {
                     Log.d("insert", "$film")
-
                 }
             }
-
         }
+
         val parentAdapter = ParentAdapter(this,films)
         val linearLayout = LinearLayoutManager(this)
         showCards.layoutManager = linearLayout
         showCards.adapter = parentAdapter
     }
+
+    override fun onSaveInstanceState(outState: Bundle){
+        super.onSaveInstanceState(outState)
+
+        // how to save the state of a custom  listOf<ActorWithMovies>
+//        outState.putParcelableArrayList("films", ArrayList(films))
+
+        outState.putString("name", name)
+
+    }
+
+    override fun onRestoreInstanceState(savedInstanceState: Bundle){
+        super.onRestoreInstanceState(savedInstanceState)
+
+        name = savedInstanceState.getString("name"," " )
+        getActorsMovieDetails(name)
+
+    }
 }
+

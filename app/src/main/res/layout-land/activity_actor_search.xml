@@ -4,20 +4,21 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ActorSearchActivity"
-    android:background="@drawable/gredient_ackground1">
+    android:background="@drawable/gredient_ackground1"
+    tools:context=".ActorSearchActivity">
+
 
     <EditText
         android:id="@+id/movieSearchView"
-        android:layout_width="238dp"
-        android:layout_height="54dp"
-        android:layout_marginTop="92dp"
+        android:layout_width="251dp"
+        android:layout_height="58dp"
+        android:layout_marginTop="24dp"
         android:background="@drawable/border"
         android:gravity="center"
         android:hint="@string/hint_search"
         android:textColorHint="#44ffffff"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.04"
+        app:layout_constraintHorizontal_bias="0.033"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
@@ -28,36 +29,38 @@
         style="@style/Widget.MaterialComponents.Button.Icon"
         android:layout_width="130dp"
         android:layout_height="55dp"
-        android:layout_marginTop="92dp"
+        android:layout_marginTop="116dp"
         android:text="@string/search"
         android:textSize="10sp"
         app:icon="@android:drawable/ic_menu_search"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.978"
+        app:layout_constraintHorizontal_bias="0.126"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:ignore="SmallSp" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/showData"
-        android:layout_width="381dp"
-        android:layout_height="546dp"
-        android:layout_marginBottom="16dp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_width="395dp"
+        android:layout_height="351dp"
+        android:layout_marginTop="24dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.533"
-        app:layout_constraintStart_toStartOf="parent">
+        app:layout_constraintHorizontal_bias="0.951"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
     </androidx.recyclerview.widget.RecyclerView>
 
     <ImageView
-        android:id="@+id/imageView3"
-        android:layout_width="143dp"
-        android:layout_height="63dp"
-        android:layout_marginBottom="648dp"
+        android:id="@+id/imageView2"
+        android:layout_width="204dp"
+        android:layout_height="139dp"
+        android:layout_marginBottom="28dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.081"
         app:layout_constraintStart_toStartOf="parent"
         app:srcCompat="@drawable/logo" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -16,10 +16,10 @@
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintHorizontal_bias="0.909"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.912">
+        app:layout_constraintVertical_bias="0.497">
 
         <Button
             android:id="@+id/addMovies"
@@ -60,13 +60,27 @@
         android:id="@+id/imageView"
         android:layout_width="289dp"
         android:layout_height="142dp"
-        android:layout_marginStart="220dp"
+        android:layout_marginStart="4dp"
         android:rotation="-21"
         android:rotationX="17"
         android:rotationY="21"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0"
+        app:layout_constraintVertical_bias="0.003"
+        app:srcCompat="@drawable/logo" />
+
+    <ImageView
+        android:id="@+id/imageView4"
+        android:layout_width="289dp"
+        android:layout_height="142dp"
+        android:layout_marginStart="4dp"
+        android:rotation="-21"
+        android:rotationX="17"
+        android:rotationY="21"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.94"
         app:srcCompat="@drawable/logo" />
 </androidx.constraintlayout.widget.ConstraintLayout>
